@@ -68,6 +68,7 @@ function promptQuestions(){
       console.log("ORDER PLACED SUCCESSFULLY");
 
       remainingStock= res - chosenQuantity;
+      console.log("TOTAL PRICE IS :" + total);
 
      } 
      
@@ -85,19 +86,13 @@ function promptQuestions(){
 
       else 
       total = chosenQuantity*res
-      console.log("TOTAL PRICE : "+ total);
+      
 
     });
      // bcoz of the above not able to update the stock quantity
     var query3 = "UPDATE products SET ? ";
 
-    connection.query(query3,{stock_quantity: remainingStock},function(err,res){
-
-      if (err) throw error
-
-     
-
-    });
+    connection.query(query3,{stock_quantity: remainingStock});
     
  
      
