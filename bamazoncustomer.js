@@ -46,63 +46,45 @@ function promptQuestions(){
     }
     ])
     .then(function(answer) {
-      var chosenItem = answer.question1;
-      var chosenQuantity = answer.question2;
+      var chosenItem = parseInt(answer.question1); 
+      var chosenQuantity = parseInt(answer.question2);
       var total;
       var remainingStock;
     console.log(chosenItem);
     console.log(chosenQuantity);
 
-    // I am not able to compare using greater than and less than in here
-    var query = "SELECT stock_quantity FROM products WHERE ?";
-
-    connection.query(query, { item_id: chosenItem }, function( res) {
-      
-     if (chosenQuantity > res){
-
-      console.log("INSUFFICIENT QUANTITY");
-     }
-     
-     else if (chosenQuantity < res){
-     
-      console.log("ORDER PLACED SUCCESSFULLY");
-
-      remainingStock= res - chosenQuantity;
-      console.log("TOTAL PRICE IS :" + total);
-
-     } 
-     
-     
-      });
-
-
-    // here the multiplication is giving the nan value  
-    var query2 = "SELECT price FROM products WHERE ?";
     
+    var query = "SELECT price, stock_quantity FROM products WHERE ?";;
 
-    connection.query(query2,{item_id: chosenItem},function(err,res){
+    connection.query(query, { item_id: chosenItem }, function( err, res) {
+        
+      if (chosenQuantity > res[0].stock_quantity){
 
-      if (err) throw error
+        console.log("SORRY WE ARE OUT OF STOCK"); 
+        return showItems();
+      }
 
-      else 
-      total = chosenQuantity*res
+        console.log("ORDER PLACED SUCCESSFULLY");
+        remainingStock = res[0].stock_quantity - chosenQuantity;
+        total = chosenQuantity*res[0].price
+        console.log("TOTAL PRICE IS :" + total);
       
-
+      var query3 = "UPDATE products SET ? WHERE ? ";
+      var placeholdersData = [
+        { stock_quantity: remainingStock },
+        { item_id: chosenItem },
+      ]
+      connection.query(query3, placeholdersData, function(err) {
+           if (err) {
+                console.log(err.message);
+                process.exit(1);
+           }
+   
+           
+           return showItems();
+   
+        
+       }); 
     });
-     // bcoz of the above not able to update the stock quantity
-    var query3 = "UPDATE products SET ? ";
-
-    connection.query(query3,{stock_quantity: remainingStock});
-    
- 
-     
     });
-
   }
-     
-      
-    
-
-    
-
-  

@@ -36,8 +36,20 @@ stock_quantity (how much of the product is available in stores)
 
 * If not, the app logs a phrase like SORRY WE ARE OUT OF STOCK!, and then prevents    the order from going through.
 
-* However, if the store does have enough of the product, it fulfills the customer's   order.
+  ![image](https://user-images.githubusercontent.com/50805302/64053500-3e9bea00-cb48-11e9-8c38-8a14cc411141.png)
+
+* However, if the store does have enough of the product, it fulfills the customer's   order and gives them the total price of their purchase.
+  
+  ![image](https://user-images.githubusercontent.com/50805302/64053347-92f29a00-cb47-11e9-8b2e-503aa8abbddc.png)
+
+
 
 * This means the SQL database updates to reflect the remaining quantity.
+
+* Original stock_quantity
+  ![image](https://user-images.githubusercontent.com/50805302/64053248-24154100-cb47-11e9-80e6-11bf53bcbfc7.png)
+
+* Remaining stock_quantity
   
-* Once the update goes through, it shows the customer the total cost of their         purchase.
+  ![image](https://user-images.githubusercontent.com/50805302/64053415-e1a03400-cb47-11e9-9d6a-4b377ab28b5e.png)
+
